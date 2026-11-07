@@ -1,10 +1,9 @@
-import type { RefObject } from "react";
 import type { CardState } from "../types/card";
 import { ShareCard } from "./ShareCard";
 
 type PreviewPanelProps = {
   card: CardState;
-  previewRef: RefObject<HTMLDivElement | null>;
+  previewRef: React.RefObject<HTMLDivElement>;
   message: string;
   onDownload: () => void;
   onCopyMetaTags: () => void;
