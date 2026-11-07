@@ -3,20 +3,23 @@ import { EditorPanel } from "./components/EditorPanel";
 import { PreviewPanel } from "./components/PreviewPanel";
 import { buildMetaTags } from "./lib/buildMetaTags";
 import { exportCardAsPng } from "./lib/exportPng";
+import { useLocalStorage } from "./lib/useLocalStorage";
 import type { CardState } from "./types/card";
 
-const initialCard: CardState = {
+export const initialCard: CardState = {
   title: "A great idea deserves to be shared.",
   authorName: "Alex Morgan",
   handle: "@alexmorgan",
   category: "DESIGN & CREATIVE",
   theme: "dark",
+  font: "sans",
   accentColor: "#8b5cf6",
   imageUrl: "",
+  avatarUrl: "",
 };
 
 export default function App() {
-  const [card, setCard] = useState<CardState>(initialCard);
+  const [card, setCard] = useLocalStorage<CardState>("social-card-state", initialCard);
   const [message, setMessage] = useState("");
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -65,7 +68,7 @@ export default function App() {
         </header>
 
         <div className="grid items-start gap-6 xl:grid-cols-[360px_minmax(0,1fr)]">
-          <EditorPanel card={card} updateCard={updateCard} />
+          <EditorPanel card={card} updateCard={updateCard} setCard={setCard} />
           <PreviewPanel
             card={card}
             previewRef={previewRef}
